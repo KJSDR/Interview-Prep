@@ -50,7 +50,7 @@
 #2. Initialize a pointer 'k' at position 1 (first element is always unique)
 #3. For each element from index 1 to end:
 #  - If current element != previous element:
-#   - Place current element at position k
+#  - Place current element at position k
 #  - Increment k
 #4. Return k
 
