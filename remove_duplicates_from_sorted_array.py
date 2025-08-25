@@ -1,15 +1,15 @@
 ##Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
 
-Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
+#Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
 
 #Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
-Return k.
-Custom Judge:
+#Return k.
+#Custom Judge:
 
 #The judge will test your solution with the following code:
 
 ##int[] nums = [...]; // Input array
-int[] expectedNums = [...]; // The expected answer with correct length
+#int[] expectedNums = [...]; // The expected answer with correct length
 
 #int k = removeDuplicates(nums); // Calls your implementation
 
@@ -42,13 +42,16 @@ int[] expectedNums = [...]; // The expected answer with correct length
 #Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
 #It does not matter what you leave beyond the returned k (hence they are underscores).
 
+# Since array is sorted, duplicates are consecutive. Use two pointers:
+# one to iterate through array, one to track where to place unique elements.
+
 #5. PSEUDOCODE
 #1. If array is empty, return 0
 #2. Initialize a pointer 'k' at position 1 (first element is always unique)
 #3. For each element from index 1 to end:
- #  - If current element != previous element:
-  #   - Place current element at position k
-   #  - Increment k
+#  - If current element != previous element:
+#   - Place current element at position k
+#  - Increment k
 #4. Return k
 
 
