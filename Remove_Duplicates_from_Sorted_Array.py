@@ -42,6 +42,15 @@ int[] expectedNums = [...]; // The expected answer with correct length
 #Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
 #It does not matter what you leave beyond the returned k (hence they are underscores).
 
+#5. PSEUDOCODE
+#1. If array is empty, return 0
+#2. Initialize a pointer 'k' at position 1 (first element is always unique)
+#3. For each element from index 1 to end:
+ #  - If current element != previous element:
+  #   - Place current element at position k
+   #  - Increment k
+#4. Return k
+
 
 class Solution(object):
     def removeDuplicates(self, nums):
