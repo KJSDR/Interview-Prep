@@ -49,4 +49,19 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        # Handle edge case
+        if not nums:
+            return 0
         
+        # First element is always unique, start k at 1
+        k = 1
+        
+        # Iterate through array starting from second element
+        for i in range(1, len(nums)):
+            # If current element is different from previous
+            if nums[i] != nums[i-1]:
+                # Place it at position k and increment k
+                nums[k] = nums[i]
+                k += 1
+        
+        return k
