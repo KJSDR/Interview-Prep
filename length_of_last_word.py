@@ -29,6 +29,8 @@
 # Traverse the string from right to left, skip trailing spaces,
 # then count characters until we hit a space or reach the beginning.
 
+
+
 #PSEUDOCODE:
 #1. Start from the end of the string
 #2. Skip any trailing spaces by moving left
