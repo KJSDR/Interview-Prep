@@ -38,20 +38,22 @@
 #4. Return the count when we hit a space or reach the beginning
 
 class Solution(object):
-    def lengthOfLastWord(self, s):
+    def lengthOfLastWord(self, s): O(1)
         """
         :type s: str
         :rtype: int
         """
         # Start from end and skip trailing spaces
-        i = len(s) - 1
-        while i >= 0 and s[i] == ' ':
-            i -= 1
+        i = len(s) - 1 O(1)
+        while i >= 0 and s[i] == ' ': O(n)
+            i -= 1 O(1)
         
         # Countlength of the last word
-        length = 0
-        while i >= 0 and s[i] != ' ':
-            length += 1
-            i -= 1
+        length = 0 O(1)
+        while i >= 0 and s[i] != ' ': O(m)
+            length += 1 O O(1)
+            i -= 1 O(1)
         
-        return length
+        return length O(1)
+
+        O(n+m)
