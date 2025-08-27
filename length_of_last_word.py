@@ -43,12 +43,12 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        # Start from the end and skip trailing spaces
+        # Start from end and skip trailing spaces
         i = len(s) - 1
         while i >= 0 and s[i] == ' ':
             i -= 1
         
-        # Count the length of the last word
+        # Countlength of the last word
         length = 0
         while i >= 0 and s[i] != ' ':
             length += 1
