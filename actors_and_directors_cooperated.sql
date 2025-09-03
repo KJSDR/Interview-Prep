@@ -1,4 +1,4 @@
-##Write a solution to find all the pairs (actor_id, director_id) where the actor has cooperated with the director at least three times.
+/*##Write a solution to find all the pairs (actor_id, director_id) where the actor has cooperated with the director at least three times.
 #Return the result table in any order.
 
 #GIVEN:
@@ -43,9 +43,10 @@
 #2. FROM ActorDirector table
 #3. GROUP BY actor_id, director_id (to group each unique pair)
 #4. HAVING COUNT(*) >= 3 (filter groups with at least 3 cooperations)
-#5. This counts all rows for each actor-director pair and keeps only those with 3+ cooperations
+#5. This counts all rows for each actor-director pair and keeps only those with 3+ cooperations*/ 
 
-# Write your MySQL query statement below
+
+
 SELECT 
     actor_id,
     director_id
