@@ -1,4 +1,4 @@
-##A country is big if it has an area of at least three million (i.e., 3000000 km2), or it has a population of at least twenty-five million (i.e., 25000000).
+/*##A country is big if it has an area of at least three million (i.e., 3000000 km2), or it has a population of at least twenty-five million (i.e., 25000000).
 #Write a solution to find the name, population, and area of the big countries.
 #Return the result table in any order.
 
@@ -43,7 +43,7 @@
 #1. SELECT name, population, and area columns
 #2. FROM World table
 #3. WHERE area >= 3000000 OR population >= 25000000
-#4. This will return all countries that meet at least one of the "big" criteria
+#4. This will return all countries that meet at least one of the "big" criteria*/ 
 
 # Write your MySQL query statement below
 SELECT 
