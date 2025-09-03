@@ -34,6 +34,7 @@
 #   - Move pointers left
 #4. Reverse result and convert to string
 
+
 class Solution(object):
     def addBinary(self, a, b):
         """
