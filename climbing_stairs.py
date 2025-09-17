@@ -43,17 +43,16 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        # Base cases
         if n == 1:
             return 1
         if n == 2:
             return 2
         
-        # Initialize for first two steps
+        # Initialize first two steps
         prev2 = 1  # ways to reach step 1
         prev1 = 2  # ways to reach step 2
         
-        # Calculate ways for steps 3 to n
+        # Calculate for steps 3 to n
         for i in range(3, n + 1):
             current = prev1 + prev2
             prev2 = prev1
