@@ -46,6 +46,7 @@
 #4. This will return all countries that meet at least one of the "big" criteria*/ 
 
 # Write your MySQL query statement below
+
 SELECT 
     name,
     population,
