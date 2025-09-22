@@ -51,9 +51,9 @@ using namespace std;
 class Solution {
 public:
     int mySqrt(int x) {
-        if (x < 2) return x; // quick return for 0 and 1
+        if (x < 2) return x;
 
-        long left = 1, right = x / 2; // sqrt(x) <= x/2 for x > 1
+        long left = 1, right = x / 2;
         int ans = 0;
 
         while (left <= right) {
@@ -63,10 +63,10 @@ public:
             if (sq == x) {
                 return (int)mid;
             } else if (sq < x) {
-                ans = (int)mid;   // possible answer
-                left = mid + 1;   // try for bigger sqrt
+                ans = (int)mid;  
+                left = mid + 1;  
             } else {
-                right = mid - 1;  // mid^2 too large
+                right = mid - 1;
             }
         }
 
