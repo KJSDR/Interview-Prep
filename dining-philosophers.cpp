@@ -1,35 +1,12 @@
 // Problem Statement (abridged):
-// Five philosophers sit at a round table with one fork between each pair.
-// A philosopher can eat only when holding BOTH left and right forks.
-// Implement synchronization so that:
-//   • Forks are picked and put correctly.
-//   • No deadlock occurs.
-//   • Each “molecule” of actions for one meal is: pick 2 forks -> eat -> put 2 forks.
-//
-// -----------------------------------------------------------------------------
-// Approach: Ordered Fork Locking (Deadlock-Free)
-// ----------------------------------------------------------------------------
-// Classic deadlock happens if each philosopher picks one fork and waits for the
-// other. To avoid deadlock without extra threads/structures, we impose a global
-// ordering on resources (forks) and always acquire them in that order.
-//
-// Implementation details:
-//   • Let left = i, right = (i+1)%5.
-//   • first = min(left, right), second = max(left, right).
-//   • Lock fork[first], then fork[second]. This produces a strict global order
-//     on fork acquisition, eliminating circular wait (no deadlock).
-//   • After both are locked, call the provided callbacks in the correct semantic
-//     order: pickLeft/pickRight -> eat -> putLeft/putRight.
-//   • Locks are released automatically by RAII when the function returns.
-//
-// Notes on starvation:
-//   • With mutexes, practical solutions accepted by LeetCode don’t strictly
-//     *prove* starvation freedom, but the strict total order plus fair mutex
-//     scheduling avoids deadlock and passes the judge.
-//
-// Time Complexity per call: O(1) synchronization.
-// Space: O(1).
-//
+// Five silent philosophers sit at a round table with bowls of spaghetti. Forks are placed between each pair of adjacent philosophers.
+//Each philosopher must alternately think and eat. However, a philosopher can only eat spaghetti when they have both left and right forks. 
+//Each fork can be held by only one philosopher and so a philosopher can use the fork only if it is not being used by another philosopher. 
+//After an individual philosopher finishes eating, they need to put down both forks so that the forks become available to others. 
+//A philosopher can take the fork on their right or the one on their left as they become available, but cannot start eating before getting both forks.
+//Eating is not limited by the remaining amounts of spaghetti or stomach space; an infinite supply and an infinite demand are assumed.
+//Design a discipline of behaviour (a concurrent algorithm) such that no philosopher will starve; i.e., 
+//each can forever continue to alternate between eating and thinking, assuming that no philosopher can know when others may want to eat or think.
 // ============================================================================
 
 #include <vector> //include is like c++ version of import for python and import from in JS
