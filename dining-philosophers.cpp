@@ -36,8 +36,11 @@
 #include <algorithm> //min, max, sort etc...
 #include <cmath> //math functions like pow and sqrt
 #include <functional> //needed to pass functions
+#include <array> //for making array containers
+#include <mutex> //mutex and unique lock
 
-using namespace std; //saves from writing std; everwhere. So for python instead of writing math.sqrt() you just do sqrt() since you have "from math import *"
+
+using namespace std; //saves from writing std:: everwhere. So for python instead of writing math.sqrt() you just do sqrt() since you have "from math import *"
 
 class DiningPhilosophers {
 private:
@@ -46,22 +49,22 @@ private:
 public:
     DiningPhilosophers() {}
 
-    void wantsToEat(int philosopher,
-                    function<void()> pickLeftFork,
+    void wantsToEat(int philosopher, //defines wantToEat function
+                    function<void()> pickLeftFork, //void is return type of function, doesnt return a value but performs an action
                     function<void()> pickRightFork,
                     function<void()> eat,
                     function<void()> putLeftFork,
                     function<void()> putRightFork) {
 
-        int left  = philosopher; //left fork index
-        int right = (philosopher + 1) % 5; //right fork index and makes it wrap around
+        int left  = philosopher; //left fork index (0-4 philosophers)
+        int right = (philosopher + 1) % 5; //right fork index and makes it wrap around (right fork is one clockwise) (% works as remainder after division) (3+1)%5=4%5, (4+1)%5=5%5 because of wrap-around
 
-        int first  = min(left, right); // makes lock smaller index first?
+        int first  = min(left, right); // makes the lower indexed lock first
         int second = max(left, right);
 
         
-        unique_lock<mutex> lk1(forks[first]); //locks both forks in order (RAII does it automically)
-        unique_lock<mutex> lk2(forks[second]); //as soon as they are created it locks the forks mutex
+        unique_lock<mutex> lk1(forks[first]); //locks both forks in order 
+        unique_lock<mutex> lk2(forks[second]); //RAII: these unlock automaticly when lk1/2 are out of scope
 
         
         if (first == left) { //here pick up both forks, eat and then put them down
@@ -79,6 +82,6 @@ public:
             putLeftFork();
             putRightFork();
         }
-        //locks release auto when lk1 and lk2 are out of scope
+        //locks auto release here
     }
 };
