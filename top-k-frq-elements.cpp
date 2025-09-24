@@ -1,77 +1,99 @@
 // Problem Statement:
-// Given an integer array nums and an integer k, return the k most frequent
-// elements. You may return the answer in any order.
+// There are two kinds of threads: hydrogen and oxygen. Threads should pass a
+// barrier in groups of three to form H2O (2 H + 1 O). Ensure that threads from
+// one molecule bond (pass) before any from the next molecule do.
 //
 // -----------------------------------------------------------------------------
-// Examples:
+// Key Requirements:
+// - Exactly 2 hydrogens and 1 oxygen pass together as a molecule.
+// - Threads must wait until a complete molecule can be formed.
+// - All threads of one molecule must pass before the next molecule starts.
 //
-// Example 1:
-// Input:  nums = [1,1,1,2,2,3], k = 2
-// Output: [1,2]
-//
-// Example 2:
-// Input:  nums = [1], k = 1
-// Output: [1]
-//
-// Example 3:
-// Input:  nums = [1,2,1,2,1,2,3,1,3,2], k = 2
-// Output: [1,2]
 // -----------------------------------------------------------------------------
+// Approach: Counting Semaphores + Reusable Barrier (O(1) space/thread)
 //
-// Constraints:
-// 1 <= nums.length <= 10^5
-// -10^4 <= nums[i] <= 10^4
-// 1 <= k <= (# of unique elements)
-// The answer is guaranteed to be unique.
+// We simulate permits with a simple counting semaphore (implemented via
+// mutex + condition_variable since LeetCode C++ may not provide <semaphore>).
 //
-// ============================================================================
+// Idea:
+//   • Allow at most 2 H threads and 1 O thread to pass for the current molecule.
+//     -> hSem initialized to 2, oSem initialized to 1
+//   • After each thread prints (bonds), it calls finish():
+//       - increment a shared counter 'cnt' protected by a mutex
+//       - when cnt == 3 (i.e., 2H + 1O finished), reset cnt to 0 and
+//         release permits for the next molecule: hSem.release(2), oSem.release(1)
+//   • This ensures the next molecule cannot start until all 3 threads from the
+//     current molecule have released (i.e., printed), satisfying the barrier.
 //
-// Approach: Bucket Sort on Frequencies (O(n))
-// 1) Count frequencies with a hash map: freq[val] -> count.
-// 2) Create buckets where bucket[i] holds all numbers that appear exactly i times.
-//    - There are at most n occurrences, so make (n + 1) buckets.
-// 3) Iterate buckets from high frequency to low, collecting elements until we
-//    gather k of them.
+// Correctness:
+//   - Capacity gating (2 H + 1 O) via semaphores enforces proper composition.
+//   - Barrier via cnt ensures that the next trio cannot begin until the current
+//     trio has completely finished printing.
 //
-// Why Bucket Sort?
-// - Avoids O(n log n) sorting of pairs by frequency.
-// - Runs in O(n) time and O(n) space.
-//
-// Time Complexity: O(n) where n = nums.size()
-// Space Complexity: O(n)
-// ============================================================================
+// -----------------------------------------------------------------------------
 
 #include <vector>
-#include <unordered_map>
+#include <algorithm>
+#include <cmath>
+#include <functional>
 using namespace std;
 
+class H2O {
+private:
+    class Semaphore {
+        int permits;
+        mutex m;
+        condition_variable cv;
+    public:
+        explicit Semaphore(int p) : permits(p) {}
+        void acquire() {
+            unique_lock<mutex> lk(m);
+            cv.wait(lk, [&]{ return permits > 0; });
+            --permits;
+        }
+        void release(int k = 1) {
+            unique_lock<mutex> lk(m);
+            permits += k;
+            cv.notify_all();
+        }
+    };
 
-using namespace std;
+    Semaphore hSem{2};  
+    Semaphore oSem{1};  
 
-class Solution {
+    mutex cnt_mtx;    
+    int cnt = 0;  
+
+    void finishOne() {
+        unique_lock<mutex> lk(cnt_mtx);
+        ++cnt;
+        if (cnt == 3) {
+           
+            cnt = 0;
+            hSem.release(2);
+            oSem.release(1);
+        }
+        
+    }
+
 public:
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        unordered_map<int, int> freq;
-        freq.reserve(nums.size() * 2);
-        for (int x : nums) {
-            ++freq[x];
-        }
+    H2O() {}
 
-        int n = nums.size();
-        vector<vector<int>> buckets(n + 1);
-        buckets.reserve(n + 1);
-        for (const auto& [val, count] : freq) {
-            buckets[count].push_back(val);
-        }
+    void hydrogen(function<void()> releaseHydrogen) {
+        hSem.acquire();
 
-        vector<int> ans;
-        ans.reserve(k);
-        for (int f = n; f >= 1 && (int)ans.size() < k; --f) {
-            for (int val : buckets[f]) {
-                ans.push_back(val);
-                if ((int)ans.size() == k) break;
-            }
-        }
-        return ans;
+        
+        releaseHydrogen();
+
+        finishOne();
+    }
+
+    void oxygen(function<void()> releaseOxygen) {
+        oSem.acquire();
+
+       
+        releaseOxygen();
+
+        finishOne();
     }
 };
