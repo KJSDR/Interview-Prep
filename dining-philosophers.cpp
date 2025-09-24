@@ -32,15 +32,16 @@
 //
 // ============================================================================
 
-#include <vector>
-#include <algorithm>
-#include <cmath>
-#include <functional>
-using namespace std;
+#include <vector> //include is like c++ version of import for python and import from in JS
+#include <algorithm> //min, max, sort etc...
+#include <cmath> //math functions like pow and sqrt
+#include <functional> //needed to pass functions
+
+using namespace std; //saves from writing std; everwhere. So for python instead of writing math.sqrt() you just do sqrt() since you have "from math import *"
 
 class DiningPhilosophers {
 private:
-    array<mutex, 5> forks;
+    array<mutex, 5> forks; //5 forks protected by a mutex (mutual exclusion: stops from multiple threads from accessing same resource at same time)
 
 public:
     DiningPhilosophers() {}
@@ -52,32 +53,32 @@ public:
                     function<void()> putLeftFork,
                     function<void()> putRightFork) {
 
-        int left  = philosopher;
-        int right = (philosopher + 1) % 5;
+        int left  = philosopher; //left fork index
+        int right = (philosopher + 1) % 5; //right fork index and makes it wrap around
 
-        int first  = min(left, right);
+        int first  = min(left, right); // makes lock smaller index first?
         int second = max(left, right);
 
         
-        unique_lock<mutex> lk1(forks[first]);
-        unique_lock<mutex> lk2(forks[second]);
+        unique_lock<mutex> lk1(forks[first]); //locks both forks in order (RAII does it automically)
+        unique_lock<mutex> lk2(forks[second]); //as soon as they are created it locks the forks mutex
 
         
-        if (first == left) {
+        if (first == left) { //here pick up both forks, eat and then put them down
             
-            pickLeftFork();
+            pickLeftFork(); //if left fork was locked first
             pickRightFork();
             eat();
             putRightFork();
             putLeftFork();
         } else {
             
-            pickRightFork();
+            pickRightFork(); //if right fork was locked first
             pickLeftFork();
             eat();
             putLeftFork();
             putRightFork();
         }
-        
+        //locks release auto when lk1 and lk2 are out of scope
     }
 };
