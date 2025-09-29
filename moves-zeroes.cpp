@@ -45,13 +45,11 @@ class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
         int insertPos = 0;
-        // Step 1: Move non-zero elements forward
         for (int x : nums) {
             if (x != 0) {
                 nums[insertPos++] = x;
             }
         }
-        // Step 2: Fill remaining with zeros
         while (insertPos < nums.size()) {
             nums[insertPos++] = 0;
         }
