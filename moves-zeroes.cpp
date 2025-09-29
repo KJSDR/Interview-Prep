@@ -3,7 +3,7 @@
 // the relative order of the non-zero elements.
 
 // Time Complexity: O(n)
-// Space Complexity: O(1) (in-place)
+// Space Complexity: O(1)
 //
 // ============================================================================
 #include <vector>
