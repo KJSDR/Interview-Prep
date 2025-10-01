@@ -22,4 +22,14 @@ public:
             nums[pos++] = 0;
         }
     }
+    // other method single pass swap
+    void moveZeroes(vector<int>& nums) {
+        int i = 0;                     
+        for (int j = 0; j < (int)nums.size(); ++j) {
+            if (nums[j] != 0) {
+                if (i != j) swap(nums[i], nums[j]);
+                ++i;
+            }
+        }
+    }
 };
