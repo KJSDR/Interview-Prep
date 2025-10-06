@@ -32,19 +32,6 @@
 //Output: 23
 //Explanation: With k=23, times needed: [2,1,1,1,1] = 6 hours total
 
-// APPROACH:
-// Binary search on the eating speed k. The minimum possible speed is 1, and the maximum needed speed is the largest pile (eating it in 1 hour). 
-// For each candidate speed, calculate total time needed and check if it's <= h.
-
-//PSEUDOCODE:
-//1. Set left = 1, right = max(piles)
-//2. While left < right:
-//   - Calculate mid = (left + right) / 2
-//   - Calculate total hours needed with speed = mid:
-//     - For each pile: hours += ceil(pile / mid) = (pile + mid - 1) / mid
-//   - If total hours <= h: right = mid (try smaller speed)
-//   - Else: left = mid + 1 (need faster speed)
-//3. Return left
 
 #include <vector>
 #include <algorithm>
