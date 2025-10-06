@@ -61,3 +61,15 @@ public:
         return left;
     }
 };
+
+int minEatingSpeedBrute(vector<int>& piles, int h) {
+    int maxPile = *max_element(piles.begin(), piles.end());
+    for (int k = 1; k <= maxPile; ++k) {      // test every speed
+        long long hours = 0;
+        for (int pile : piles) {
+            hours += (pile + k - 1) / k;      // ceil(pile/k)
+        }
+        if (hours <= h) return k;             // first feasible speed
+    }
+    return maxPile;
+}
