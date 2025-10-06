@@ -64,12 +64,12 @@ public:
 
 int minEatingSpeedBrute(vector<int>& piles, int h) {
     int maxPile = *max_element(piles.begin(), piles.end());
-    for (int k = 1; k <= maxPile; ++k) {      // test every speed
+    for (int k = 1; k <= maxPile; ++k) {     
         long long hours = 0;
         for (int pile : piles) {
-            hours += (pile + k - 1) / k;      // ceil(pile/k)
+            hours += (pile + k - 1) / k;     
         }
-        if (hours <= h) return k;             // first feasible speed
+        if (hours <= h) return k;            
     }
     return maxPile;
 }
