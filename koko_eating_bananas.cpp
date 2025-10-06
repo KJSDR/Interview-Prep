@@ -5,34 +5,6 @@
 //Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return.
 //Return the minimum integer k such that she can eat all the bananas within h hours.
 
-//GIVEN:
-//- Array piles where piles[i] represents bananas in the ith pile
-//- Integer h representing hours until guards return
-//- 1 <= piles.length <= 10^4
-//- piles.length <= h <= 10^9
-//- 1 <= piles[i] <= 10^9
-//- Koko eats k bananas per hour from one pile
-//- If pile has < k bananas, she eats all and stops for that hour
-
-//OUTPUT:
-//- Minimum integer k such that Koko can eat all bananas within h hours
-
-//Example 1:
-//Input: piles = [3,6,7,11], h = 8
-//Output: 4
-//Explanation: With k=4, times needed: [1,2,2,3] = 8 hours total
-
-//Example 2:
-//Input: piles = [30,11,23,4,20], h = 5
-//Output: 30
-//Explanation: With k=30, times needed: [1,1,1,1,1] = 5 hours total
-
-//Example 3:
-//Input: piles = [30,11,23,4,20], h = 6
-//Output: 23
-//Explanation: With k=23, times needed: [2,1,1,1,1] = 6 hours total
-
-
 #include <vector>
 #include <algorithm>
 using namespace std;
